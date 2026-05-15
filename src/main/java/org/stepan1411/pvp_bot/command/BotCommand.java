@@ -42,6 +42,14 @@ public class BotCommand {
             return builder.buildFuture();
         };
 
+    private static final SuggestionProvider<ServerCommandSource> PLAYER_SUGGESTIONS =
+        (ctx, builder) -> {
+            for (var player : ctx.getSource().getServer().getPlayerManager().getPlayerList()) {
+                builder.suggest(player.getName().getString());
+            }
+            return builder.buildFuture();
+        };
+
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("pvpbot")
             .requires(s -> true)
@@ -76,6 +84,7 @@ public class BotCommand {
                     .then(CommandManager.argument("botname", StringArgumentType.word())
                         .suggests(BOT_SUGGESTIONS)
                         .then(CommandManager.argument("target", StringArgumentType.word())
+                            .suggests(PLAYER_SUGGESTIONS)
                             .executes(BotCommand::botAttack))))
                 .then(CommandManager.literal("stop-attack")
                     .then(CommandManager.argument("botname", StringArgumentType.word())
@@ -153,6 +162,7 @@ public class BotCommand {
                         .executes(BotCommand::kitDelete)))
                 .then(CommandManager.literal("give-kit")
                     .then(CommandManager.argument("playername", StringArgumentType.word())
+                        .suggests(PLAYER_SUGGESTIONS)
                         .then(CommandManager.argument("kitname", StringArgumentType.word())
                             .suggests(KIT_SUGGESTIONS)
                             .executes(BotCommand::kitGive))))
@@ -172,10 +182,12 @@ public class BotCommand {
                 .then(CommandManager.literal("add")
                     .then(CommandManager.argument("faction", StringArgumentType.word())
                         .then(CommandManager.argument("player", StringArgumentType.word())
+                            .suggests(PLAYER_SUGGESTIONS)
                             .executes(BotCommand::factionAdd))))
                 .then(CommandManager.literal("remove")
                     .then(CommandManager.argument("faction", StringArgumentType.word())
                         .then(CommandManager.argument("player", StringArgumentType.word())
+                            .suggests(PLAYER_SUGGESTIONS)
                             .executes(BotCommand::factionRemove))))
                 .then(CommandManager.literal("hostile")
                     .then(CommandManager.argument("faction1", StringArgumentType.word())
@@ -200,6 +212,7 @@ public class BotCommand {
                 .then(CommandManager.literal("attack")
                     .then(CommandManager.argument("faction", StringArgumentType.word())
                         .then(CommandManager.argument("target", StringArgumentType.word())
+                            .suggests(PLAYER_SUGGESTIONS)
                             .executes(BotCommand::factionAttack))))
                 .then(CommandManager.literal("startpath")
                     .then(CommandManager.argument("faction", StringArgumentType.word())
