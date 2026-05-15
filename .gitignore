@@ -17,3 +17,5 @@
 /libs
 build/export_classpath.json
 /secretfolder
+/skins
+download_skins.py
