@@ -104,8 +104,7 @@ public class BotNavigation {
 
         
 
-        BotDebug.showPath(bot, targetPos, state.pathHistory);
-        BotDebug.showTargetBlock(bot, targetPos);
+
 
         
 

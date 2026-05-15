@@ -61,7 +61,6 @@ public class BotSettings {
     private int minHungerToEat = 14;
     private boolean autoPotionEnabled = true;
     private boolean cobwebEnabled = true;
-    private boolean useBaritone = true;
     private boolean retreatEnabled = true;
     private double retreatHealthPercent = 0.3;
     private double criticalHealthPercent = 0.15;
@@ -76,15 +75,11 @@ public class BotSettings {
     private int mistakeChance = 5;
     private int reactionDelay = 0;
     private boolean botsRelogs = true;
-    private boolean sendStats = true;
     private boolean useSpecialNames = false;
     private int elytraMaceMaxRetries = 3;
     private int elytraMaceMinAltitude = 15;
     private double elytraMaceAttackDistance = 6.0;
     private int elytraMaceFireworkCount = 3;
-    private boolean gotoUseBaritone = true;
-    private boolean escortUseBaritone = false;
-    private boolean followUseBaritone = false;
     private boolean shieldMace = true;
     private boolean preferShieldMace = false;
     private boolean shieldMainHand = true;
@@ -186,7 +181,6 @@ public class BotSettings {
     public boolean isCobwebEnabled() { return cobwebEnabled; }
     
 
-    public boolean isUseBaritone() { return useBaritone; }
     public boolean isRetreatEnabled() { return retreatEnabled; }
     public double getRetreatHealthPercent() { return retreatHealthPercent; }
     public double getCriticalHealthPercent() { return criticalHealthPercent; }
@@ -205,7 +199,6 @@ public class BotSettings {
     public boolean isBotsRelogs() { return botsRelogs; }
     
 
-    public boolean isSendStats() { return sendStats; }
     public boolean isUseSpecialNames() { return useSpecialNames; }
     
 
@@ -215,9 +208,6 @@ public class BotSettings {
     public int getElytraMaceFireworkCount() { return elytraMaceFireworkCount; }
     
 
-    public boolean isGotoUseBaritone() { return gotoUseBaritone; }
-    public boolean isEscortUseBaritone() { return escortUseBaritone; }
-    public boolean isFollowUseBaritone() { return followUseBaritone; }
     public boolean isShieldMace() { return shieldMace; }
     public boolean isPreferShieldMace() { return preferShieldMace; }
     public boolean isShieldMainHand() { return shieldMainHand; }
@@ -344,7 +334,6 @@ public class BotSettings {
     public void setCobwebEnabled(boolean value) { this.cobwebEnabled = value; save(); }
     
 
-    public void setUseBaritone(boolean value) { this.useBaritone = value; save(); }
     public void setRetreatEnabled(boolean value) { this.retreatEnabled = value; save(); }
     public void setRetreatHealthPercent(double value) { 
         this.retreatHealthPercent = Math.max(0.1, Math.min(0.9, value)); 
@@ -406,21 +395,6 @@ public class BotSettings {
     }
     
 
-    public void setGotoUseBaritone(boolean value) { 
-        this.gotoUseBaritone = value; 
-        save(); 
-    }
-    
-    public void setEscortUseBaritone(boolean value) { 
-        this.escortUseBaritone = value; 
-        save(); 
-    }
-    
-    public void setFollowUseBaritone(boolean value) { 
-        this.followUseBaritone = value; 
-        save(); 
-    }
-    
     public void setShieldMace(boolean value) { 
         this.shieldMace = value; 
         save(); 

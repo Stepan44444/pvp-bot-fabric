@@ -1,0 +1,6 @@
+v14 -> v15 Changelog
+
+- Removed SGUI
+- Restructured to bot-management and kit groups
+- Removed stats, debug, sync, pathfinding
+- Removed example API handlers (noisy logs)

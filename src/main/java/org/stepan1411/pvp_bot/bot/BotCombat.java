@@ -116,10 +116,6 @@ public class BotCombat {
         state.target = target;
         
 
-        if (target != null) {
-            BotDebug.showTargetEntity(bot, target);
-        }
-
         
 
         if (state.isPlacingCobweb && target != null) {
@@ -271,20 +267,6 @@ public class BotCombat {
 
 
         boolean shouldLookAt = !utilsState.isThrowingPotion;
-        
-        if (shouldLookAt && settings.isUseBaritone()) {
-
-            var mainHandStack = bot.getMainHandStack();
-            boolean usingMace = mainHandStack.getItem().toString().toLowerCase().contains("mace");
-            
-            if (usingMace) {
-
-                shouldLookAt = !bot.isOnGround() || distance <= 5.0;
-            } else {
-
-                shouldLookAt = distance <= 3.5;
-            }
-        }
         
         if (shouldLookAt) {
             BotNavigation.lookAt(bot, target);
@@ -571,32 +553,29 @@ public class BotCombat {
     
     
     private static boolean isTargetMaceAttacking(Entity target) {
-        if (!(target instanceof PlayerEntity player)) return false;
-        
+            if (!(target instanceof PlayerEntity player)) return false;
 
-        ItemStack mainHand = player.getMainHandStack();
-        boolean hasMace = mainHand.getItem() == Items.MACE;
-        
-        if (!hasMace) return false;
-        
+            // Check if target has mace in main hand
+            ItemStack mainHand = player.getMainHandStack();
+            boolean hasMace = mainHand.getItem() == Items.MACE;
 
-        boolean inAir = !player.isOnGround();
-        if (!inAir) return false;
-        
+            if (!hasMace) return false;
 
-        double velocityY = player.getVelocity().y;
-        
+            // Check if target is not on ground (in air)
+            boolean inAir = !player.isOnGround();
+            if (!inAir) return false;
 
+            // Check if target is falling (negative Y velocity) - predict earlier for shield bug
+            double velocityY = player.getVelocity().y;
 
+            // Predict mace attack when player is falling down
+            // Use -0.08 threshold to catch falling but still give 10+ ticks warning
+            // This compensates for vanilla shield bug where shield needs to be raised earlier
+            boolean willAttackSoon = velocityY < -0.08; // Only when actually falling
 
-        boolean willAttackSoon = velocityY < -0.08;
-        
-        if (willAttackSoon) {
-            System.out.println("[MACE_DETECTION] " + player.getName().getString() + " attacking with mace! (vel: " + String.format("%.2f", velocityY) + ")");
+            return willAttackSoon;
         }
-        
-        return willAttackSoon;
-    }
+
     
     
     private static void handleMaceDefense(ServerPlayerEntity bot, Entity target, BotSettings settings, net.minecraft.server.MinecraftServer server) {
@@ -619,7 +598,6 @@ public class BotCombat {
 
             combatState.maceDefenseCooldown = 20;
             combatState.isMaceDefending = true;
-            System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " detected mace attack from " + target.getName().getString() + "! Settings: shieldmace=" + settings.isShieldMace());
         }
         
 
@@ -633,7 +611,6 @@ public class BotCombat {
                         "player " + bot.getName().getString() + " stop", 
                         server.getCommandSource()
                     );
-                    System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " stopped defending (cooldown expired)");
                 } catch (Exception e) {
                     bot.clearActiveItem();
                 }
@@ -646,7 +623,6 @@ public class BotCombat {
 
         int shieldSlot = findShield(inventory);
         if (shieldSlot < 0) {
-            System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " has no shield!");
             return;
         }
         
@@ -655,7 +631,6 @@ public class BotCombat {
         boolean hasTotem = offhand.getItem() == Items.TOTEM_OF_UNDYING;
         
         if (hasTotem && !settings.isPreferShieldMace()) {
-            System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " has totem and preferShieldMace is false, skipping");
             return;
         }
         
@@ -668,7 +643,6 @@ public class BotCombat {
                 inventory.setStack(shieldSlot, current);
                 inventory.setStack(0, shield);
                 shieldSlot = 0;
-                System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " moved shield to main hand (slot 0)");
             }
             
 
@@ -681,7 +655,6 @@ public class BotCombat {
                         "player " + bot.getName().getString() + " use continuous", 
                         server.getCommandSource()
                     );
-                    System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " activating shield in main hand");
                 } catch (Exception e) {
                     bot.setCurrentHand(Hand.MAIN_HAND);
                 }
@@ -694,7 +667,6 @@ public class BotCombat {
                 ItemStack current = inventory.getStack(40);
                 inventory.setStack(shieldSlot, current);
                 inventory.setStack(40, shield);
-                System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " moved shield to offhand");
             }
             
 
@@ -704,7 +676,6 @@ public class BotCombat {
                         "player " + bot.getName().getString() + " use continuous", 
                         server.getCommandSource()
                     );
-                    System.out.println("[MACE_DEFENSE] " + bot.getName().getString() + " activating shield in offhand");
                 } catch (Exception e) {
                     bot.setCurrentHand(Hand.OFF_HAND);
                 }

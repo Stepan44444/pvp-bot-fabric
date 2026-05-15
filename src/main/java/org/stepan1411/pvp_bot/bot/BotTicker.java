@@ -51,9 +51,6 @@ public class BotTicker {
                 BotUtils.update(bot, server);
                 
 
-                BotMovement.updateMovement(bot);
-                
-
                 boolean isFollowingWithoutAttack = BotPath.isFollowing(botName) && !BotPath.shouldAttack(botName);
                 if (!isFollowingWithoutAttack) {
                     BotCombat.update(bot, server);

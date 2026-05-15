@@ -55,16 +55,6 @@ public class PvpBotAPI {
     }
     
     
-    public static int getTotalBotsSpawned() {
-        return BotManager.getBotsSpawnedTotal();
-    }
-    
-    
-    public static int getTotalBotsKilled() {
-        return BotManager.getBotsKilledTotal();
-    }
-    
-    
     public static boolean isBotAlive(MinecraftServer server, String name) {
         ServerPlayerEntity bot = getBot(server, name);
         return bot != null && bot.isAlive();
@@ -81,8 +71,6 @@ public class PvpBotAPI {
         StringBuilder sb = new StringBuilder();
         sb.append("PVP Bot API v").append(API_VERSION).append("\n");
         sb.append("Active bots: ").append(getBotCount()).append("\n");
-        sb.append("Total spawned: ").append(getTotalBotsSpawned()).append("\n");
-        sb.append("Total killed: ").append(getTotalBotsKilled()).append("\n");
         sb.append("Event handlers: ").append(getEventManager().getSpawnHandlerCount())
           .append(" spawn, ").append(getEventManager().getDeathHandlerCount())
           .append(" death, ").append(getEventManager().getAttackHandlerCount())

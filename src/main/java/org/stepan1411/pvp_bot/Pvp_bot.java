@@ -10,7 +10,7 @@ import org.stepan1411.pvp_bot.bot.BotPath;
 import org.stepan1411.pvp_bot.bot.BotTicker;
 import org.stepan1411.pvp_bot.command.BotCommand;
 import org.stepan1411.pvp_bot.config.WorldConfigHelper;
-import org.stepan1411.pvp_bot.stats.StatsReporter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +31,6 @@ public class Pvp_bot implements ModInitializer {
 
             org.stepan1411.pvp_bot.api.combat.CombatStrategyRegistry.getInstance()
                 .register(new org.stepan1411.pvp_bot.api.combat.ExampleStrategy());
-            
-
-            org.stepan1411.pvp_bot.api.ExampleEventHandlers.register();
             
         } catch (Exception e) {
             LOGGER.error("Failed to initialize PVP Bot API: " + e.getMessage());
@@ -56,12 +53,10 @@ public class Pvp_bot implements ModInitializer {
             BotManager.init(server);
             BotKits.init(server);
             BotPath.init();
-            StatsReporter.start(server);
         });
         
 
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-            StatsReporter.stop();
             BotManager.reset(server);
             
 
