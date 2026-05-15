@@ -107,8 +107,10 @@ public class BotManager {
             
             try {
                 String command = String.format(java.util.Locale.US,
-                    "player %s spawn at %.2f %.2f %.2f facing %.2f %.2f in %s",
-                    name, data.x, data.y, data.z, data.yaw, data.pitch, data.dimension
+                    "playerspawn %s at %.2f %.2f %.2f facing %.2f %.2f in %s on %s",
+                    name, data.x, data.y, data.z, data.yaw, data.pitch,
+                    data.gamemode != null ? data.gamemode : "survival",
+                    data.dimension
                 );
                 if (retryCount == 0) {
                     System.out.println("[PVP_BOT] Restoring bot: " + name);
@@ -116,11 +118,6 @@ public class BotManager {
                     System.out.println("[PVP_BOT] Retry #" + retryCount + " for bot: " + name);
                 }
                 dispatcher.execute(command, server.getCommandSource());
-                
-                if (data.gamemode != null && !data.gamemode.isEmpty()) {
-                    String gamemodeCommand = String.format("gamemode %s %s", data.gamemode, name);
-                    dispatcher.execute(gamemodeCommand, server.getCommandSource());
-                }
                 
                 bots.add(name);
                 botDataMap.put(name, data);
@@ -130,7 +127,7 @@ public class BotManager {
 
                 try {
                     String simpleCommand = String.format(java.util.Locale.US,
-                        "player %s spawn at %.2f %.2f %.2f",
+                        "playerspawn %s at %.2f %.2f %.2f",
                         name, data.x, data.y, data.z
                     );
                     dispatcher.execute(simpleCommand, server.getCommandSource());

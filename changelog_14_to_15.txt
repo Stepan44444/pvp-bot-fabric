@@ -7,3 +7,4 @@ v14 -> v15 Changelog
 - Added /pvpbot reload
 - Added botLeaveOnDeath setting
 - Removed noisy startup/background logs
+- Fixed bot restore
