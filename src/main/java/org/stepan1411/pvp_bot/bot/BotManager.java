@@ -53,7 +53,6 @@ public class BotManager {
 
         bots.clear();
         botDataMap.clear();
-        System.out.println("[PVP_BOT] Initializing BotManager for new world...");
         
         Path configDir = FabricLoader.getInstance().getConfigDir().resolve("pvpbot");
         try {
@@ -63,7 +62,6 @@ public class BotManager {
         }
         
         savePath = org.stepan1411.pvp_bot.config.WorldConfigHelper.getWorldConfigDir().resolve("bots.json");
-        System.out.println("[PVP_BOT] Bot config path: " + savePath);
         loadBots();
         BotSettings settings = BotSettings.get();
         if (settings.isBotsRelogs() && !botDataMap.isEmpty()) {
@@ -208,7 +206,7 @@ public class BotManager {
                 skipped++;
             }
         }
-        System.out.println("[PVP_BOT] Updated bot data: " + updated + " updated, " + skipped + " skipped, " + missing + " missing, " + bots.size() + " total in list, " + botDataMap.size() + " in data map");
+
     }
     
     
@@ -224,9 +222,7 @@ public class BotManager {
     
     
     private static void loadBots() {
-        System.out.println("[PVP_BOT] Loading bots from: " + savePath);
         if (savePath == null || !Files.exists(savePath)) {
-            System.out.println("[PVP_BOT] No bots file found, starting fresh");
             return;
         }
         
@@ -235,7 +231,6 @@ public class BotManager {
             if (loaded != null) {
                 botDataMap.putAll(loaded);
                 bots.addAll(loaded.keySet());
-                System.out.println("[PVP_BOT] Loaded " + loaded.size() + " bots from file");
             }
         } catch (Exception e) {
             System.out.println("[PVP_BOT] Failed to load bots: " + e.getMessage());

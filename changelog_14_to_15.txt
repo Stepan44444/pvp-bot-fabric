@@ -4,3 +4,6 @@ v14 -> v15 Changelog
 - Restructured to bot-management and kit groups
 - Removed stats, debug, sync, pathfinding
 - Removed example API handlers (noisy logs)
+- Added /pvpbot reload
+- Added botLeaveOnDeath setting
+- Removed noisy startup/background logs
