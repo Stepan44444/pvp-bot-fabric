@@ -1,10 +1,10 @@
 v14 -> v15 Changelog
 
 - Removed SGUI
-- Restructured to bot-management and kit groups
+- Removed API module (BotEventManager, CombatStrategyRegistry, etc.)
 - Removed stats, debug, sync, pathfinding
-- Removed example API handlers (noisy logs)
+- Restructured to bot-management and kit groups
 - Added /pvpbot reload
 - Added botLeaveOnDeath setting
-- Removed noisy startup/background logs
-- Fixed bot restore
+- Removed noisy logs
+- Fixed bot restore (player spawn -> playerspawn)

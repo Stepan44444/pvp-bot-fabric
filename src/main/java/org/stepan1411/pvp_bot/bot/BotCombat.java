@@ -245,20 +245,7 @@ public class BotCombat {
         if (utilsState.isMending) {
             return;
         }
-        
 
-
-        try {
-            var strategyRegistry = org.stepan1411.pvp_bot.api.combat.CombatStrategyRegistry.getInstance();
-            boolean strategyExecuted = strategyRegistry.executeStrategy(bot, target, settings, server);
-            if (strategyExecuted) {
-
-                return;
-            }
-        } catch (Exception e) {
-            System.err.println("[PVP_BOT] Error executing combat strategy: " + e.getMessage());
-            e.printStackTrace();
-        }
 
 
 
@@ -1147,16 +1134,6 @@ public class BotCombat {
         BotSettings settings = BotSettings.get();
         
 
-        try {
-            boolean cancelled = org.stepan1411.pvp_bot.api.BotAPIIntegration.fireAttackEvent(bot, target);
-            if (cancelled) {
-                return;
-            }
-        } catch (Exception e) {
-            System.err.println("[PVP_BOT_API] Error firing attack event: " + e.getMessage());
-        }
-        
-
         if (random.nextInt(100) < settings.getMissChance()) {
 
             bot.swingHand(Hand.MAIN_HAND);
@@ -1178,12 +1155,6 @@ public class BotCombat {
             return;
         }
 
-        boolean cancelled = org.stepan1411.pvp_bot.api.BotAPIIntegration.fireAttackEvent(bot, target);
-        if (cancelled) {
-            System.out.println("[COMBAT] " + bot.getName().getString() + " attack cancelled by API");
-            bot.swingHand(Hand.MAIN_HAND);
-            return;
-        }
 
 
         if (!settings.isFriendlyFireEnabled() && target instanceof PlayerEntity) {

@@ -44,12 +44,6 @@ public class BotTicker {
             ServerPlayerEntity bot = BotManager.getBot(server, botName);
             if (bot != null && bot.isAlive()) {
 
-                try {
-                    org.stepan1411.pvp_bot.api.PvpBotAPI.getEventManager().fireTickEvent(bot);
-                } catch (Exception e) {
-                    System.err.println("[PVP_BOT_API] Error firing tick event: " + e.getMessage());
-                }
-
                 BotUtils.update(bot, server);
                 
 

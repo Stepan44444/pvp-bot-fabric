@@ -310,11 +310,6 @@ public class BotManager {
                 System.out.println("[PVP_BOT] Added bot to list (delayed): " + name);
                 
 
-                try {
-                    org.stepan1411.pvp_bot.api.PvpBotAPI.getEventManager().fireSpawnEvent(newBot);
-                } catch (Exception e) {
-                    System.err.println("[PVP_BOT_API] Error firing spawn event: " + e.getMessage());
-                }
             } else if (newBot != null && bots.contains(name)) {
 
                 botDataMap.put(name, new BotData(newBot));
@@ -332,11 +327,6 @@ public class BotManager {
                 saveBots();
                 System.out.println("[PVP_BOT] Added bot to list (immediate): " + name);
 
-                try {
-                    org.stepan1411.pvp_bot.api.BotAPIIntegration.fireSpawnEvent(newBot);
-                } catch (Exception e) {
-                    System.err.println("[PVP_BOT_API] Error firing spawn event: " + e.getMessage());
-                }
             }
             return true;
         }
@@ -374,12 +364,6 @@ public class BotManager {
         BotNavigation.resetIdle(name);
         
 
-        try {
-            org.stepan1411.pvp_bot.api.combat.CombatStrategyRegistry.getInstance().clearCooldowns(name);
-        } catch (Exception e) {
-            System.err.println("[PVP_BOT_API] Error clearing strategy cooldowns: " + e.getMessage());
-        }
-
         String command = "player " + name + " kill";
         var dispatcher = server.getCommandManager().getDispatcher();
         try {
@@ -406,12 +390,6 @@ public class BotManager {
             BotNavigation.resetIdle(name);
             
 
-            try {
-                org.stepan1411.pvp_bot.api.combat.CombatStrategyRegistry.getInstance().clearCooldowns(name);
-            } catch (Exception e) {
-                System.err.println("[PVP_BOT_API] Error clearing strategy cooldowns: " + e.getMessage());
-            }
-            
             String command = "player " + name + " kill";
             try {
                 dispatcher.execute(command, source);
@@ -459,24 +437,11 @@ public class BotManager {
             if (isDead) {
 
 
-                try {
-                    org.stepan1411.pvp_bot.api.BotAPIIntegration.fireDeathEvent(bot);
-                } catch (Exception e) {
-                    System.err.println("[PVP_BOT_API] Error firing death event: " + e.getMessage());
-                }
-                
                 bots.remove(name);
                 botDataMap.remove(name);
                 BotCombat.removeState(name);
                 BotUtils.removeState(name);
                 BotNavigation.resetIdle(name);
-                
-
-                try {
-                    org.stepan1411.pvp_bot.api.combat.CombatStrategyRegistry.getInstance().clearCooldowns(name);
-                } catch (Exception e) {
-                    System.err.println("[PVP_BOT_API] Error clearing strategy cooldowns: " + e.getMessage());
-                }
                 
                 // Kick the dead bot from server
                 try {
