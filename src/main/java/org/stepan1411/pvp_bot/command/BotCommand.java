@@ -46,6 +46,8 @@ public class BotCommand {
                     .executes(BotCommand::remove)))
 
             // ========== REMOVEALL ==========
+            .then(CommandManager.literal("reload")
+                .executes(BotCommand::reload))
             .then(CommandManager.literal("removeall")
                 .executes(BotCommand::removeAll))
 
@@ -370,6 +372,17 @@ public class BotCommand {
         BotManager.removeAllBots(source.getServer(), source);
         source.sendFeedback(() -> Text.literal("Removed " + count + " bots"), true);
         return count;
+    }
+
+    private static int reload(CommandContext<ServerCommandSource> ctx) {
+        var source = ctx.getSource();
+        var server = source.getServer();
+        BotSettings.load();
+        BotKits.reload(server);
+        BotPath.init();
+        BotManager.reloadBots();
+        source.sendFeedback(() -> Text.literal("All configurations reloaded!"), true);
+        return 1;
     }
 
     private static int settings(CommandContext<ServerCommandSource> ctx) {

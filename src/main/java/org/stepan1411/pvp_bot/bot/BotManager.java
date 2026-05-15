@@ -442,6 +442,13 @@ public class BotManager {
         return new HashSet<>(bots);
     }
     
+    public static void reloadBots() {
+        bots.clear();
+        botDataMap.clear();
+        savePath = org.stepan1411.pvp_bot.config.WorldConfigHelper.getWorldConfigDir().resolve("bots.json");
+        loadBots();
+    }
+    
     
     public static void cleanupDeadBots(MinecraftServer server) {
         boolean changed = false;
