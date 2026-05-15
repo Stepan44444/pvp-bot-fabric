@@ -7,6 +7,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -25,6 +26,22 @@ import java.util.function.Consumer;
 
 public class BotCommand {
 
+    private static final SuggestionProvider<ServerCommandSource> BOT_SUGGESTIONS =
+        (ctx, builder) -> {
+            for (String bot : BotManager.getAllBots()) {
+                builder.suggest(bot);
+            }
+            return builder.buildFuture();
+        };
+
+    private static final SuggestionProvider<ServerCommandSource> KIT_SUGGESTIONS =
+        (ctx, builder) -> {
+            for (String kit : BotKits.getKitNames()) {
+                builder.suggest(kit);
+            }
+            return builder.buildFuture();
+        };
+
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("pvpbot")
             .requires(s -> true)
@@ -35,14 +52,10 @@ public class BotCommand {
                 .then(CommandManager.argument("name", StringArgumentType.word())
                     .executes(ctx -> spawn(ctx, StringArgumentType.getString(ctx, "name")))))
 
-            // ========== MASSSPAWN ==========
-            .then(CommandManager.literal("massspawn")
-                .then(CommandManager.argument("count", IntegerArgumentType.integer(1, 50))
-                    .executes(BotCommand::massSpawn)))
-
             // ========== REMOVE ==========
             .then(CommandManager.literal("remove")
                 .then(CommandManager.argument("name", StringArgumentType.word())
+                    .suggests(BOT_SUGGESTIONS)
                     .executes(BotCommand::remove)))
 
             // ========== REMOVEALL ==========
@@ -56,16 +69,21 @@ public class BotCommand {
 
             // ========== BOT-MANAGEMENT ==========
             .then(CommandManager.literal("bot-management")
+                .then(CommandManager.literal("mass-spawn")
+                    .then(CommandManager.argument("count", IntegerArgumentType.integer(1, 50))
+                        .executes(BotCommand::massSpawn)))
                 .then(CommandManager.literal("attack")
                     .then(CommandManager.argument("botname", StringArgumentType.word())
+                        .suggests(BOT_SUGGESTIONS)
                         .then(CommandManager.argument("target", StringArgumentType.word())
                             .executes(BotCommand::botAttack))))
-                .then(CommandManager.literal("stop")
-                    .then(CommandManager.literal("attack")
-                        .then(CommandManager.argument("botname", StringArgumentType.word())
-                            .executes(BotCommand::botStopAttack))))
+                .then(CommandManager.literal("stop-attack")
+                    .then(CommandManager.argument("botname", StringArgumentType.word())
+                        .suggests(BOT_SUGGESTIONS)
+                        .executes(BotCommand::botStopAttack)))
                 .then(CommandManager.literal("inventory")
                     .then(CommandManager.argument("botname", StringArgumentType.word())
+                        .suggests(BOT_SUGGESTIONS)
                         .executes(BotCommand::botInventory)))
                 .then(CommandManager.literal("list")
                     .executes(BotCommand::botList))
@@ -97,10 +115,12 @@ public class BotCommand {
                                 .executes(BotCommand::pathAttack))))
                     .then(CommandManager.literal("start")
                         .then(CommandManager.argument("bot", StringArgumentType.word())
+                            .suggests(BOT_SUGGESTIONS)
                             .then(CommandManager.argument("path", StringArgumentType.word())
                                 .executes(BotCommand::pathStart))))
                     .then(CommandManager.literal("stop")
                         .then(CommandManager.argument("bot", StringArgumentType.word())
+                            .suggests(BOT_SUGGESTIONS)
                             .executes(BotCommand::pathStop)))
                     .then(CommandManager.literal("list")
                         .executes(BotCommand::pathList))
@@ -129,10 +149,12 @@ public class BotCommand {
                         .executes(BotCommand::kitCreate)))
                 .then(CommandManager.literal("delete-kit")
                     .then(CommandManager.argument("name", StringArgumentType.word())
+                        .suggests(KIT_SUGGESTIONS)
                         .executes(BotCommand::kitDelete)))
                 .then(CommandManager.literal("give-kit")
                     .then(CommandManager.argument("playername", StringArgumentType.word())
                         .then(CommandManager.argument("kitname", StringArgumentType.word())
+                            .suggests(KIT_SUGGESTIONS)
                             .executes(BotCommand::kitGive))))
                 .then(CommandManager.literal("kits")
                     .executes(BotCommand::kitList)))
@@ -189,6 +211,7 @@ public class BotCommand {
                 .then(CommandManager.literal("givekit")
                     .then(CommandManager.argument("faction", StringArgumentType.word())
                         .then(CommandManager.argument("kitname", StringArgumentType.word())
+                            .suggests(KIT_SUGGESTIONS)
                             .executes(BotCommand::factionGiveKit)))))
         );
     }

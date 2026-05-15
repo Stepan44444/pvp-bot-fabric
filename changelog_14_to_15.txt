@@ -4,6 +4,9 @@ v14 -> v15 Changelog
 - Removed API module (BotEventManager, CombatStrategyRegistry, etc.)
 - Removed stats, debug, sync, pathfinding
 - Restructured to bot-management and kit groups
+- Moved massspawn -> bot-management mass-spawn
+- Changed stop attack -> stop-attack
+- Added tab completion for bot/kit names
 - Added /pvpbot reload
 - Added botLeaveOnDeath setting
 - Removed noisy logs
