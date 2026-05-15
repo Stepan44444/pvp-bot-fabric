@@ -269,6 +269,7 @@ public class BotCommand {
         settings.then(boolSetting("autoeat", () -> BotSettings.get().isAutoEatEnabled(), v -> BotSettings.get().setAutoEatEnabled(v)));
         settings.then(boolSetting("automend", () -> BotSettings.get().isAutoMendEnabled(), v -> BotSettings.get().setAutoMendEnabled(v)));
         settings.then(boolSetting("botLeaveOnDeath", () -> BotSettings.get().isBotLeaveOnDeath(), v -> BotSettings.get().setBotLeaveOnDeath(v)));
+        settings.then(boolSetting("attackInvincible", () -> BotSettings.get().isAttackInvincible(), v -> BotSettings.get().setAttackInvincible(v)));
         settings.then(doubleSetting("viewdistance", () -> BotSettings.get().getMaxTargetDistance(), v -> BotSettings.get().setMaxTargetDistance(v), 5.0, 128.0));
 
         return settings;
@@ -450,6 +451,7 @@ public class BotCommand {
         source.sendFeedback(() -> Text.literal("shieldbreak: " + s.isShieldBreakEnabled()), false);
         source.sendFeedback(() -> Text.literal("prefersword: " + s.isPreferSword()), false);
         source.sendFeedback(() -> Text.literal("botLeaveOnDeath: " + s.isBotLeaveOnDeath()), false);
+        source.sendFeedback(() -> Text.literal("attackInvincible: " + s.isAttackInvincible()), false);
         source.sendFeedback(() -> Text.literal("=== Navigation Settings ==="), false);
         source.sendFeedback(() -> Text.literal("bhop: " + s.isBhopEnabled()), false);
         source.sendFeedback(() -> Text.literal("bhopcooldown: " + s.getBhopCooldown() + " ticks"), false);

@@ -316,9 +316,13 @@ public class BotCombat {
         if (state.forcedTargetName != null) {
             Entity forced = findEntityByName(bot, state.forcedTargetName, server);
             if (forced != null && forced.isAlive()) {
-                double dist = bot.distanceTo(forced);
-                if (dist <= settings.getMaxTargetDistance()) {
-                    return forced;
+                if (forced instanceof PlayerEntity player && !settings.isAttackInvincible() && (player.isSpectator() || player.isCreative() || player.isInvulnerable())) {
+                    state.forcedTargetName = null;
+                } else {
+                    double dist = bot.distanceTo(forced);
+                    if (dist <= settings.getMaxTargetDistance()) {
+                        return forced;
+                    }
                 }
             }
 
@@ -330,10 +334,14 @@ public class BotCombat {
 
             if (!state.lastAttacker.isRemoved() && state.lastAttacker.isAlive()) {
 
-                if (!settings.isFriendlyFireEnabled() && state.lastAttacker instanceof PlayerEntity) {
-                    String attackerName = state.lastAttacker.getName().getString();
-                    if (BotFaction.areAllies(bot.getName().getString(), attackerName)) {
+                if (state.lastAttacker instanceof PlayerEntity lastPlayer) {
+                    if (!settings.isAttackInvincible() && (lastPlayer.isSpectator() || lastPlayer.isCreative() || lastPlayer.isInvulnerable())) {
                         state.lastAttacker = null;
+                    } else if (!settings.isFriendlyFireEnabled()) {
+                        String attackerName = lastPlayer.getName().getString();
+                        if (BotFaction.areAllies(bot.getName().getString(), attackerName)) {
+                            state.lastAttacker = null;
+                        }
                     }
                 }
                 
@@ -387,7 +395,7 @@ public class BotCombat {
             for (var player : server.getPlayerManager().getPlayerList()) {
                 if (player == bot) continue;
                 if (!player.isAlive()) continue;
-                if (player.isSpectator() || player.isCreative()) continue;
+                if (!settings.isAttackInvincible() && (player.isSpectator() || player.isCreative() || player.isInvulnerable())) continue;
                 
                 String targetName = player.getName().getString();
                 
@@ -459,7 +467,7 @@ public class BotCombat {
         
 
         if (entity instanceof PlayerEntity player) {
-            if (player.isSpectator() || player.isCreative()) return false;
+            if (!settings.isAttackInvincible() && (player.isSpectator() || player.isCreative() || player.isInvulnerable())) return false;
             
             String targetName = player.getName().getString();
             

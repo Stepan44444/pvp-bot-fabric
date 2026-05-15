@@ -77,6 +77,7 @@ public class BotSettings {
     private boolean botsRelogs = true;
     private boolean useSpecialNames = false;
     private boolean botLeaveOnDeath = true;
+    private boolean attackInvincible = false;
     private int elytraMaceMaxRetries = 3;
     private int elytraMaceMinAltitude = 15;
     private double elytraMaceAttackDistance = 6.0;
@@ -202,6 +203,7 @@ public class BotSettings {
 
     public boolean isUseSpecialNames() { return useSpecialNames; }
     public boolean isBotLeaveOnDeath() { return botLeaveOnDeath; }
+    public boolean isAttackInvincible() { return attackInvincible; }
     
 
     public int getElytraMaceMaxRetries() { return elytraMaceMaxRetries; }
@@ -378,6 +380,7 @@ public class BotSettings {
     public void setBotsRelogs(boolean value) { this.botsRelogs = value; save(); }
     public void setUseSpecialNames(boolean value) { this.useSpecialNames = value; save(); }
     public void setBotLeaveOnDeath(boolean value) { this.botLeaveOnDeath = value; save(); }
+    public void setAttackInvincible(boolean value) { this.attackInvincible = value; save(); }
     
 
     public void setElytraMaceMaxRetries(int value) { 

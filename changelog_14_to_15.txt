@@ -11,3 +11,4 @@ v14 -> v15 Changelog
 - Added botLeaveOnDeath setting
 - Removed noisy logs
 - Fixed bot restore (player spawn -> playerspawn)
+- Added attackInvincible setting
