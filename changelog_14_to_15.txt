@@ -12,6 +12,7 @@ v14 -> v15 Changelog
 - Changed stop attack -> stop-attack
 - Renamed all settings to kebab-case (auto-armor, attack-cooldown, etc.)
 - Added tab completion for bot/kit names
+- Added tab completion for player names (give-kit, faction add/remove/attack)
 - Added /pvpbot reload
 - Added botLeaveOnDeath (auto-runs /herobot botLeaveOnDeath)
 - Added attackInvincible (prevents attacking creative/spectator/invulnerable)
@@ -19,3 +20,4 @@ v14 -> v15 Changelog
 - Fixed bot restore (player spawn -> playerspawn)
 - Improved movement (smooth look, strafe, W-tap, knockback detection, bhop)
 - Improved shield AI (enemy attack prediction, random flicker, hold-over)
+- Added shield-break-chance setting (axe break with delay + chance)

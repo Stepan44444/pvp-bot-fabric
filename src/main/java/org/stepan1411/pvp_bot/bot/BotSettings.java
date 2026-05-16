@@ -70,6 +70,7 @@ public class BotSettings {
     private boolean friendlyFireEnabled = false;
     private int missChance = 0;
     private int mistakeChance = 0;
+    private int shieldBreakChance = 40;
     private boolean botsRelogs = true;
     private boolean useSpecialNames = false;
     private boolean botLeaveOnDeath = true;
@@ -184,6 +185,7 @@ public class BotSettings {
     public boolean isFriendlyFireEnabled() { return friendlyFireEnabled; }
     public int getMissChance() { return missChance; }
     public int getMistakeChance() { return mistakeChance; }
+    public int getShieldBreakChance() { return shieldBreakChance; }
     public boolean isBotsRelogs() { return botsRelogs; }
     
 
@@ -340,6 +342,10 @@ public class BotSettings {
     }
     public void setMistakeChance(int value) { 
         this.mistakeChance = Math.max(0, Math.min(100, value)); 
+        save(); 
+    }
+    public void setShieldBreakChance(int value) { 
+        this.shieldBreakChance = Math.max(0, Math.min(100, value)); 
         save(); 
     }
     public void setBotsRelogs(boolean value) { this.botsRelogs = value; save(); }

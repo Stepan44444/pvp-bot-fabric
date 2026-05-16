@@ -267,6 +267,7 @@ public class BotCommand {
         settings.then(boolSetting("friendly-fire", () -> BotSettings.get().isFriendlyFireEnabled(), v -> BotSettings.get().setFriendlyFireEnabled(v)));
         settings.then(intSetting("miss-chance", () -> BotSettings.get().getMissChance(), v -> BotSettings.get().setMissChance(v), 0, 100));
         settings.then(intSetting("mistake-chance", () -> BotSettings.get().getMistakeChance(), v -> BotSettings.get().setMistakeChance(v), 0, 100));
+        settings.then(intSetting("shield-break-chance", () -> BotSettings.get().getShieldBreakChance(), v -> BotSettings.get().setShieldBreakChance(v), 0, 100));
         settings.then(boolSetting("retreat", () -> BotSettings.get().isRetreatEnabled(), v -> BotSettings.get().setRetreatEnabled(v)));
         settings.then(boolSetting("auto-eat", () -> BotSettings.get().isAutoEatEnabled(), v -> BotSettings.get().setAutoEatEnabled(v)));
         settings.then(boolSetting("auto-mend", () -> BotSettings.get().isAutoMendEnabled(), v -> BotSettings.get().setAutoMendEnabled(v)));
@@ -456,6 +457,7 @@ public class BotCommand {
         source.sendFeedback(() -> Text.literal("friendly-fire: " + s.isFriendlyFireEnabled()), false);
         source.sendFeedback(() -> Text.literal("miss-chance: " + s.getMissChance() + "%"), false);
         source.sendFeedback(() -> Text.literal("mistake-chance: " + s.getMistakeChance() + "%"), false);
+        source.sendFeedback(() -> Text.literal("shield-break-chance: " + s.getShieldBreakChance() + "%"), false);
 
         return 1;
     }

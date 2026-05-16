@@ -64,6 +64,7 @@ public class BotCombat {
         public int shieldFlickerTicks = 0;
         public int shieldPredictTicks = 0;
         public int shieldHoldTicks = 0;
+        public int shieldHitTicks = 0;
         
         public enum WeaponMode {
             MELEE,
@@ -749,35 +750,31 @@ public class BotCombat {
             }
             
 
+            // === SHIELD BREAK (every 2 ticks while enemy blocks) ===
             if (settings.isShieldBreakEnabled() && target instanceof PlayerEntity player && player.isBlocking()) {
-
-                int axeSlot = findAxe(inventory);
-                if (axeSlot >= 0) {
-
-                    if (axeSlot >= 9) {
-                        ItemStack axe = inventory.getStack(axeSlot);
-                        ItemStack current = inventory.getStack(0);
-                        inventory.setStack(axeSlot, current);
-                        inventory.setStack(0, axe);
-                        axeSlot = 0;
+                state.shieldHitTicks++;
+                if (state.shieldHitTicks % 2 == 0 && random.nextInt(100) < settings.getShieldBreakChance()) {
+                    int axeSlot = findAxe(inventory);
+                    if (axeSlot >= 0) {
+                        if (axeSlot >= 9) {
+                            ItemStack axe = inventory.getStack(axeSlot);
+                            ItemStack current = inventory.getStack(0);
+                            inventory.setStack(axeSlot, current);
+                            inventory.setStack(0, axe);
+                            axeSlot = 0;
+                        }
+                        org.stepan1411.pvp_bot.utils.InventoryHelper.setSelectedSlot(inventory, axeSlot);
+                        attackWithCarpet(bot, target, server);
+                        state.shieldBroken = true;
+                        state.shieldBrokenTime = System.currentTimeMillis();
+                        int cooldown = lowHealth ? (int)(settings.getAttackCooldown() * 1.5) : settings.getAttackCooldown();
+                        state.attackCooldown = cooldown;
+                        state.shieldHitTicks = 0;
+                        return;
                     }
-                    org.stepan1411.pvp_bot.utils.InventoryHelper.setSelectedSlot(inventory, axeSlot);
-                    
-
-                    attackWithCarpet(bot, target, server);
-                    
-
-                    state.shieldBroken = true;
-                    state.shieldBrokenTime = System.currentTimeMillis();
-                    
-
-                    int cooldown = lowHealth ? (int)(settings.getAttackCooldown() * 1.5) : settings.getAttackCooldown();
-                    state.attackCooldown = cooldown;
-                    
-
-
-                    return;
                 }
+            } else {
+                state.shieldHitTicks = 0;
             }
             
 
