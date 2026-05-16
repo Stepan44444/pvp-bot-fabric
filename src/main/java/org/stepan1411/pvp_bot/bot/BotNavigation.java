@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class BotNavigation {
 
-    private static final float MAX_BODY_ROT_PER_TICK = 15.0F;
     private static final Map<String, NavigationState> navStates = new HashMap<>();
 
     public static class NavigationState {
@@ -279,9 +278,10 @@ public class BotNavigation {
     }
 
     private static float smoothAngle(float current, float desired) {
+        float maxRot = (float) BotSettings.get().getAimSpeed();
         float delta = wrapDegrees(desired - current);
-        if (delta > MAX_BODY_ROT_PER_TICK) delta = MAX_BODY_ROT_PER_TICK;
-        if (delta < -MAX_BODY_ROT_PER_TICK) delta = -MAX_BODY_ROT_PER_TICK;
+        if (delta > maxRot) delta = maxRot;
+        if (delta < -maxRot) delta = -maxRot;
         return current + delta;
     }
 

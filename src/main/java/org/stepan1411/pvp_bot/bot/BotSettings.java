@@ -21,9 +21,7 @@ public class BotSettings {
     private boolean dropWorseArmor = false;
     private boolean dropWorseWeapons = false;
     private double dropDistance = 3.0;
-    private int dropDelay = 20;
     private int checkInterval = 20;
-    private int minArmorLevel = 0;
     private boolean combatEnabled = true;
     private boolean revengeEnabled = true;
     private boolean autoTargetEnabled = false;
@@ -46,8 +44,6 @@ public class BotSettings {
     private boolean anchorPvpEnabled = true;
     private double spearRange = 4.5;
     private double spearChargeRange = 12.0;
-    private int spearMinChargeTime = 15;
-    private int spearMaxChargeTime = 40;
     private boolean autoTotemEnabled = true;
     private boolean totemPriority = true;
     private boolean autoEatEnabled = true;
@@ -75,6 +71,7 @@ public class BotSettings {
     private boolean useSpecialNames = false;
     private boolean botLeaveOnDeath = true;
     private boolean attackInvincible = false;
+    private double aimSpeed = 15.0;
     private boolean shieldMace = true;
     
     private BotSettings() {}
@@ -128,11 +125,8 @@ public class BotSettings {
     public boolean isDropWorseArmor() { return dropWorseArmor; }
     public boolean isDropWorseWeapons() { return dropWorseWeapons; }
     public double getDropDistance() { return dropDistance; }
-    public int getDropDelay() { return dropDelay; }
     public int getCheckInterval() { return checkInterval; }
-    public int getMinArmorLevel() { return minArmorLevel; }
     
-
     public boolean isCombatEnabled() { return combatEnabled; }
     public boolean isRevengeEnabled() { return revengeEnabled; }
     public boolean isAutoTargetEnabled() { return autoTargetEnabled; }
@@ -155,10 +149,7 @@ public class BotSettings {
     public boolean isAnchorPvpEnabled() { return anchorPvpEnabled; }
     public double getSpearRange() { return spearRange; }
     public double getSpearChargeRange() { return spearChargeRange; }
-    public int getSpearMinChargeTime() { return spearMinChargeTime; }
-    public int getSpearMaxChargeTime() { return spearMaxChargeTime; }
     
-
     public boolean isAutoTotemEnabled() { return autoTotemEnabled; }
     public boolean isTotemPriority() { return totemPriority; }
     public boolean isAutoEatEnabled() { return autoEatEnabled; }
@@ -192,9 +183,8 @@ public class BotSettings {
     public boolean isUseSpecialNames() { return useSpecialNames; }
     public boolean isBotLeaveOnDeath() { return botLeaveOnDeath; }
     public boolean isAttackInvincible() { return attackInvincible; }
-    
-
     public boolean isShieldMace() { return shieldMace; }
+    public double getAimSpeed() { return aimSpeed; }
     
 
     public void setAutoEquipArmor(boolean value) { 
@@ -217,20 +207,11 @@ public class BotSettings {
         this.dropDistance = Math.max(1.0, Math.min(10.0, value)); 
         save();
     }
-    public void setDropDelay(int value) { 
-        this.dropDelay = Math.max(1, Math.min(200, value)); 
-        save();
-    }
     public void setCheckInterval(int value) { 
         this.checkInterval = Math.max(1, Math.min(100, value)); 
         save();
     }
-    public void setMinArmorLevel(int value) { 
-        this.minArmorLevel = Math.max(0, Math.min(100, value)); 
-        save();
-    }
     
-
     public void setCombatEnabled(boolean value) { this.combatEnabled = value; save(); }
     public void setRevengeEnabled(boolean value) { this.revengeEnabled = value; save(); }
     public void setAutoTargetEnabled(boolean value) { this.autoTargetEnabled = value; save(); }
@@ -284,16 +265,7 @@ public class BotSettings {
         this.spearChargeRange = Math.max(5.0, Math.min(20.0, value)); 
         save(); 
     }
-    public void setSpearMinChargeTime(int value) { 
-        this.spearMinChargeTime = Math.max(5, Math.min(30, value)); 
-        save(); 
-    }
-    public void setSpearMaxChargeTime(int value) { 
-        this.spearMaxChargeTime = Math.max(20, Math.min(60, value)); 
-        save(); 
-    }
     
-
     public void setAutoTotemEnabled(boolean value) { this.autoTotemEnabled = value; save(); }
     public void setTotemPriority(boolean value) { this.totemPriority = value; save(); }
     public void setAutoEatEnabled(boolean value) { this.autoEatEnabled = value; save(); }
@@ -352,6 +324,10 @@ public class BotSettings {
     public void setUseSpecialNames(boolean value) { this.useSpecialNames = value; save(); }
     public void setBotLeaveOnDeath(boolean value) { this.botLeaveOnDeath = value; save(); }
     public void setAttackInvincible(boolean value) { this.attackInvincible = value; save(); }
+    public void setAimSpeed(double value) { 
+        this.aimSpeed = Math.max(3.0, Math.min(45.0, value)); 
+        save(); 
+    }
     
     public void setShieldMace(boolean value) { 
         this.shieldMace = value; 

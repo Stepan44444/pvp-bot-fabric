@@ -24,6 +24,8 @@ public class BotManager {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Set<String> bots = new HashSet<>();
     private static final Map<String, BotData> botDataMap = new HashMap<>();
+    private static final Map<String, Integer> nullTickCount = new HashMap<>();
+    private static final int MAX_NULL_TICKS = 100;
     private static Path savePath;
     private static boolean initialized = false;
     public static class BotData {
@@ -424,19 +426,26 @@ public class BotManager {
         boolean changed = false;
         for (String name : new HashSet<>(bots)) {
             ServerPlayerEntity bot = server.getPlayerManager().getPlayer(name);
-            
-
-
 
             if (bot == null) {
+                int ticks = nullTickCount.getOrDefault(name, 0) + 1;
+                nullTickCount.put(name, ticks);
+                if (ticks >= MAX_NULL_TICKS) {
+                    bots.remove(name);
+                    botDataMap.remove(name);
+                    BotCombat.removeState(name);
+                    BotUtils.removeState(name);
+                    BotNavigation.resetIdle(name);
+                    nullTickCount.remove(name);
+                    changed = true;
+                    System.out.println("[PVP_BOT] Removed dead bot (entity gone): " + name);
+                }
                 continue;
             }
-            
 
+            nullTickCount.remove(name);
             boolean isDead = !bot.isAlive() || bot.getHealth() <= 0 || bot.isDead();
             if (isDead) {
-
-
                 bots.remove(name);
                 botDataMap.remove(name);
                 BotCombat.removeState(name);

@@ -273,6 +273,7 @@ public class BotCommand {
         settings.then(boolSetting("auto-mend", () -> BotSettings.get().isAutoMendEnabled(), v -> BotSettings.get().setAutoMendEnabled(v)));
         settings.then(boolSetting("bot-leave-on-death", () -> BotSettings.get().isBotLeaveOnDeath(), v -> BotSettings.get().setBotLeaveOnDeath(v)));
         settings.then(boolSetting("attack-invincible", () -> BotSettings.get().isAttackInvincible(), v -> BotSettings.get().setAttackInvincible(v)));
+        settings.then(doubleSetting("aim-speed", () -> BotSettings.get().getAimSpeed(), v -> BotSettings.get().setAimSpeed(v), 3.0, 45.0));
         settings.then(doubleSetting("view-distance", () -> BotSettings.get().getMaxTargetDistance(), v -> BotSettings.get().setMaxTargetDistance(v), 5.0, 128.0));
 
         return settings;
@@ -447,6 +448,7 @@ public class BotCommand {
         source.sendFeedback(() -> Text.literal("prefer-sword: " + s.isPreferSword()), false);
         source.sendFeedback(() -> Text.literal("bot-leave-on-death: " + s.isBotLeaveOnDeath()), false);
         source.sendFeedback(() -> Text.literal("attack-invincible: " + s.isAttackInvincible()), false);
+        source.sendFeedback(() -> Text.literal("aim-speed: " + s.getAimSpeed()), false);
         source.sendFeedback(() -> Text.literal("=== Navigation Settings ==="), false);
         source.sendFeedback(() -> Text.literal("bhop: " + s.isBhopEnabled()), false);
 
