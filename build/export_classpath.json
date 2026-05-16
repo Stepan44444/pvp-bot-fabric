@@ -2,17 +2,23 @@
   "projectPath": ":",
   "classpaths": {
     "test": [
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\classes\\java\\test",
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\resources\\test"
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\classes\\java\\test",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\resources\\test",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\test\\classes",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\test\\resources"
     ],
     "client": [
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\classes\\java\\client",
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\resources\\client"
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\classes\\java\\client",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\resources\\client",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\client\\classes",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\client\\resources"
     ],
     "main": [
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\classes\\java\\main",
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\resources\\main",
-      "E:\\_IdeaProjects\\pvp-bot-fabric\\build\\devlibs\\PVP_bot-0.0.15-pre-release-1-dev.jar"
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\classes\\java\\main",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\resources\\main",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\build\\devlibs\\PVP_bot-0.0.14-dev.jar",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\production\\classes",
+      "C:\\Users\\leogr\\Downloads\\pvp-bot-fabric-modified\\out\\production\\resources"
     ]
   }
 }
