@@ -42,6 +42,7 @@ public class BotSettings {
     private boolean spearEnabled = false;
     private boolean crystalPvpEnabled = true;
     private boolean anchorPvpEnabled = true;
+    private boolean elytraMaceEnabled = true;
     private double spearRange = 4.5;
     private double spearChargeRange = 12.0;
     private boolean autoTotemEnabled = true;
@@ -56,23 +57,37 @@ public class BotSettings {
     private int minHungerToEat = 14;
     private boolean autoPotionEnabled = true;
     private boolean cobwebEnabled = true;
+    private boolean useBaritone = true;
     private boolean retreatEnabled = true;
     private double retreatHealthPercent = 0.3;
     private double criticalHealthPercent = 0.15;
     private boolean bhopEnabled = true;
+    private int bhopCooldown = 12;
+    private double jumpBoost = 0.0;
     private boolean idleWanderEnabled = false;
     private double idleWanderRadius = 10.0;
     private boolean factionsEnabled = true;
     private boolean friendlyFireEnabled = false;
-    private int missChance = 0;
-    private int mistakeChance = 0;
-    private int shieldBreakChance = 40;
+    private int missChance = 10;
+    private int mistakeChance = 5;
+    private int reactionDelay = 0;
     private boolean botsRelogs = true;
+    private boolean sendStats = true;
     private boolean useSpecialNames = false;
     private boolean botLeaveOnDeath = true;
     private boolean attackInvincible = false;
     private double aimSpeed = 15.0;
+    private int elytraMaceMaxRetries = 3;
+    private int elytraMaceMinAltitude = 15;
+    private double elytraMaceAttackDistance = 6.0;
+    private int elytraMaceFireworkCount = 3;
+    private boolean gotoUseBaritone = true;
+    private boolean escortUseBaritone = false;
+    private boolean followUseBaritone = false;
+    private int minArmorLevel = 0;
     private boolean shieldMace = true;
+    private boolean preferShieldMace = false;
+    private boolean shieldMainHand = true;
     
     private BotSettings() {}
     
@@ -147,6 +162,7 @@ public class BotSettings {
     public boolean isSpearEnabled() { return spearEnabled; }
     public boolean isCrystalPvpEnabled() { return crystalPvpEnabled; }
     public boolean isAnchorPvpEnabled() { return anchorPvpEnabled; }
+    public boolean isElytraMaceEnabled() { return elytraMaceEnabled; }
     public double getSpearRange() { return spearRange; }
     public double getSpearChargeRange() { return spearChargeRange; }
     
@@ -164,10 +180,13 @@ public class BotSettings {
     public boolean isCobwebEnabled() { return cobwebEnabled; }
     
 
+    public boolean isUseBaritone() { return useBaritone; }
     public boolean isRetreatEnabled() { return retreatEnabled; }
     public double getRetreatHealthPercent() { return retreatHealthPercent; }
     public double getCriticalHealthPercent() { return criticalHealthPercent; }
     public boolean isBhopEnabled() { return bhopEnabled; }
+    public int getBhopCooldown() { return bhopCooldown; }
+    public double getJumpBoost() { return jumpBoost; }
     public boolean isIdleWanderEnabled() { return idleWanderEnabled; }
     public double getIdleWanderRadius() { return idleWanderRadius; }
     
@@ -176,15 +195,26 @@ public class BotSettings {
     public boolean isFriendlyFireEnabled() { return friendlyFireEnabled; }
     public int getMissChance() { return missChance; }
     public int getMistakeChance() { return mistakeChance; }
-    public int getShieldBreakChance() { return shieldBreakChance; }
+    public int getReactionDelay() { return reactionDelay; }
     public boolean isBotsRelogs() { return botsRelogs; }
     
 
+    public boolean isSendStats() { return sendStats; }
     public boolean isUseSpecialNames() { return useSpecialNames; }
     public boolean isBotLeaveOnDeath() { return botLeaveOnDeath; }
     public boolean isAttackInvincible() { return attackInvincible; }
     public boolean isShieldMace() { return shieldMace; }
     public double getAimSpeed() { return aimSpeed; }
+    public int getElytraMaceMaxRetries() { return elytraMaceMaxRetries; }
+    public int getElytraMaceMinAltitude() { return elytraMaceMinAltitude; }
+    public double getElytraMaceAttackDistance() { return elytraMaceAttackDistance; }
+    public int getElytraMaceFireworkCount() { return elytraMaceFireworkCount; }
+    public boolean isGotoUseBaritone() { return gotoUseBaritone; }
+    public boolean isEscortUseBaritone() { return escortUseBaritone; }
+    public boolean isFollowUseBaritone() { return followUseBaritone; }
+    public boolean isPreferShieldMace() { return preferShieldMace; }
+    public boolean isShieldMainHand() { return shieldMainHand; }
+    public int getMinArmorLevel() { return minArmorLevel; }
     
 
     public void setAutoEquipArmor(boolean value) { 
@@ -257,6 +287,7 @@ public class BotSettings {
     public void setSpearEnabled(boolean value) { this.spearEnabled = value; save(); }
     public void setCrystalPvpEnabled(boolean value) { this.crystalPvpEnabled = value; save(); }
     public void setAnchorPvpEnabled(boolean value) { this.anchorPvpEnabled = value; save(); }
+    public void setElytraMaceEnabled(boolean value) { this.elytraMaceEnabled = value; save(); }
     public void setSpearRange(double value) { 
         this.spearRange = Math.max(2.0, Math.min(8.0, value)); 
         save(); 
@@ -289,6 +320,7 @@ public class BotSettings {
     public void setCobwebEnabled(boolean value) { this.cobwebEnabled = value; save(); }
     
 
+    public void setUseBaritone(boolean value) { this.useBaritone = value; save(); }
     public void setRetreatEnabled(boolean value) { this.retreatEnabled = value; save(); }
     public void setRetreatHealthPercent(double value) { 
         this.retreatHealthPercent = Math.max(0.1, Math.min(0.9, value)); 
@@ -299,6 +331,14 @@ public class BotSettings {
         save(); 
     }
     public void setBhopEnabled(boolean value) { this.bhopEnabled = value; save(); }
+    public void setBhopCooldown(int value) { 
+        this.bhopCooldown = Math.max(5, Math.min(30, value)); 
+        save(); 
+    }
+    public void setJumpBoost(double value) { 
+        this.jumpBoost = Math.max(0.0, Math.min(0.5, value)); 
+        save(); 
+    }
     public void setIdleWanderEnabled(boolean value) { this.idleWanderEnabled = value; save(); }
     public void setIdleWanderRadius(double value) { 
         this.idleWanderRadius = Math.max(3.0, Math.min(50.0, value)); 
@@ -316,8 +356,8 @@ public class BotSettings {
         this.mistakeChance = Math.max(0, Math.min(100, value)); 
         save(); 
     }
-    public void setShieldBreakChance(int value) { 
-        this.shieldBreakChance = Math.max(0, Math.min(100, value)); 
+    public void setReactionDelay(int value) { 
+        this.reactionDelay = Math.max(0, Math.min(20, value)); 
         save(); 
     }
     public void setBotsRelogs(boolean value) { this.botsRelogs = value; save(); }
@@ -328,9 +368,51 @@ public class BotSettings {
         this.aimSpeed = Math.max(3.0, Math.min(45.0, value)); 
         save(); 
     }
+    public void setElytraMaceMaxRetries(int value) { 
+        this.elytraMaceMaxRetries = Math.max(1, Math.min(10, value)); 
+        save(); 
+    }
+    public void setElytraMaceMinAltitude(int value) { 
+        this.elytraMaceMinAltitude = Math.max(5, Math.min(50, value)); 
+        save(); 
+    }
+    public void setElytraMaceAttackDistance(double value) { 
+        this.elytraMaceAttackDistance = Math.max(3.0, Math.min(15.0, value)); 
+        save(); 
+    }
+    public void setElytraMaceFireworkCount(int value) { 
+        this.elytraMaceFireworkCount = Math.max(1, Math.min(10, value)); 
+        save(); 
+    }
+    public void setGotoUseBaritone(boolean value) { 
+        this.gotoUseBaritone = value; 
+        save(); 
+    }
+    public void setEscortUseBaritone(boolean value) { 
+        this.escortUseBaritone = value; 
+        save(); 
+    }
+    public void setFollowUseBaritone(boolean value) { 
+        this.followUseBaritone = value; 
+        save(); 
+    }
+    public void setMinArmorLevel(int value) { 
+        this.minArmorLevel = Math.max(0, Math.min(100, value)); 
+        save(); 
+    }
     
     public void setShieldMace(boolean value) { 
         this.shieldMace = value; 
+        save(); 
+    }
+    
+    public void setPreferShieldMace(boolean value) { 
+        this.preferShieldMace = value; 
+        save(); 
+    }
+    
+    public void setShieldMainHand(boolean value) { 
+        this.shieldMainHand = value; 
         save(); 
     }
 }
